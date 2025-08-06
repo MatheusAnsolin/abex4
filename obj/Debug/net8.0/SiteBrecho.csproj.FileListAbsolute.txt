@@ -1,0 +1,8 @@
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.csproj.AssemblyReference.cache
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.GeneratedMSBuildEditorConfig.editorconfig
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.AssemblyInfoInputs.cache
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.AssemblyInfo.cs
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.csproj.CoreCompileInputs.cache
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.MvcApplicationPartsAssemblyInfo.cs
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.MvcApplicationPartsAssemblyInfo.cache
+/home/math/SiteBrecho/obj/Debug/net8.0/SiteBrecho.sourcelink.json
