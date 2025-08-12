@@ -3763,11 +3763,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/math/SiteBrecho/SiteBrecho.csproj",
+      "projectUniqueName": "/home/math/Documentos/SiteBrecho/SiteBrecho.csproj",
       "projectName": "SiteBrecho",
-      "projectPath": "/home/math/SiteBrecho/SiteBrecho.csproj",
+      "projectPath": "/home/math/Documentos/SiteBrecho/SiteBrecho.csproj",
       "packagesPath": "/home/math/.nuget/packages/",
-      "outputPath": "/home/math/SiteBrecho/obj/",
+      "outputPath": "/home/math/Documentos/SiteBrecho/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/math/.nuget/NuGet/NuGet.Config"
