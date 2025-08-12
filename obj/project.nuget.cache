@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wPHpLWb3AyQ=",
+  "dgSpecHash": "A7znLsw+RCPPXOnMsnXZmlt6rX3LzHTJj6ri5Aocg+m3l0/jHaZQHz+ieoF4BRje+jupab9sKmoCPkdqHUemNA==",
   "success": true,
-  "projectFilePath": "/home/math/SiteBrecho/SiteBrecho.csproj",
+  "projectFilePath": "/home/math/Documentos/SiteBrecho/SiteBrecho.csproj",
   "expectedPackageFiles": [
     "/home/math/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/home/math/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

@@ -13,15 +13,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  web:
-    build: .
-    container_name: sitebrecho-api
-    ports:
-      - "5000:80"
-    depends_on:
-      - postgres
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=brecho_db;Username=brecho_user;Password=brecho_pass
-
 volumes:
   postgres_data:
