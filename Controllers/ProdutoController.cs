@@ -6,5 +6,5 @@ namespace SiteBrecho.Controllers;
 [Route("[controller]")]
 public class ProdutoController : ControllerBase
 {
-    // Endpoints serão definidos aqui futuramente
+    
 }
