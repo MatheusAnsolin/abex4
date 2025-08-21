@@ -1,18 +1,32 @@
-namespace SiteBrecho.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class ProdutoModel
+namespace SiteBrecho.Models
 {
-    public int Id { get; set; }
-    public string Nome { get; set; }
-    public string Descricao { get; set; }
-    public decimal PrecoCusto { get; set; }
-    public decimal PrecoVenda { get; set; }
+    public class ProdutoModel
+    {
+        [Key]
+        public int Id { get; set; }
+        
+        [Required]
+        [MaxLength(100)]
+        public string Nome { get; set; }
 
-    public int FornecedorId { get; set; }
-    public FornecedorModel Fornecedor { get; set; }
+        [MaxLength(500)]
+        public string? Descricao { get; set; }
+        
+        [Required]
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal PrecoCusto { get; set; }
+        
+        [Required]
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal PrecoVenda { get; set; }
 
-    public DateTime CriadoEm { get; set; }//   = DateTime.UtcNow; dotnet ef database update dá erro se usar isso
-    public DateTime AtualizadoEm { get; set; } //   = DateTime.UtcNow; dotnet ef database update dá erro se usar isso
+        public int? FornecedorId { get; set; }
 
-    public EstoqueModel Estoque { get; set; }
+        public DateTime CriadoEm { get; set; }
+        
+        public DateTime AtualizadoEm { get; set; }
+    }   
 }

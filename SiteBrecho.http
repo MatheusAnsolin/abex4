@@ -1,6 +1,6 @@
 @SiteBrecho_HostAddress = http://localhost:8080
 
-GET {{SiteBrecho_HostAddress}}/weatherforecast/
+GET {{SiteBrecho_HostAddress}}/api/HealthCheck/
 Accept: application/json
 
 ###

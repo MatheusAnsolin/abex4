@@ -1,8 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using SiteBrecho.Data;
 using Microsoft.OpenApi.Models;
+using SiteBrecho.Repositories;
+using SiteBrecho.Services;
+using SiteBrecho.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -42,7 +48,11 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "API do Brechó v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
 
 app.MapControllers();

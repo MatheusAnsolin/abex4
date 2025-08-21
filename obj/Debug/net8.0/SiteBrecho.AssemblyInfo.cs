@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("5222a488-6e26-4884-8708-2cf83ed0b058")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b301b477c9c68093813ecbdf1877a2ec68091f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c27ec46d5d7a1ba3406d3bf8c83573b33e7a080e")]
 [assembly: System.Reflection.AssemblyProductAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
