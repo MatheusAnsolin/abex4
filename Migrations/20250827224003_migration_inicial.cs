@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SiteBrecho.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class migration_inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
