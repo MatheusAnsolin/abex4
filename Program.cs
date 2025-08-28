@@ -1,8 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using SiteBrecho.Data;
 using Microsoft.OpenApi.Models;
+using SiteBrecho.Repositories;
+using SiteBrecho.Services;
+using SiteBrecho.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
 builder.Services.AddEndpointsApiExplorer();
 

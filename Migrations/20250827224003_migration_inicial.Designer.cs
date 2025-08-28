@@ -12,8 +12,8 @@ using SiteBrecho.Data;
 namespace SiteBrecho.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250812231058_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250827224003_migration_inicial")]
+    partial class migration_inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
