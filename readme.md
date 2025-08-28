@@ -47,14 +47,6 @@ dotnet tool install --global dotnet-ef
 ```
 docker-compose up -d
 ```
-🔧 Configuração do Banco
-
-O banco está configurado em appsettings.json:
-```
-"ConnectionStrings": {
-  "DefaultConnection": "Host=localhost;Port=5432;Database=brecho_db;Username=brecho_user;Password=brecho_pass"
-}
-```
 
 🛠️ Migrations e Banco de Dados
 Criar migration
@@ -69,13 +61,10 @@ Aplicar migrations no banco
 ```
 dotnet ef database update
 ```
-🧪 Executar o Projeto
-```
-dotnet run
-```
+
 A API será iniciada em:
 
-http://localhost:5000
+http://localhost:8080
 
 👤 Usuário Seed (Admin)
 
