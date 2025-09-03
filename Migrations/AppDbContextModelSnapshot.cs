@@ -167,33 +167,81 @@ namespace SiteBrecho.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
-                    b.Property<int>("FornecedorId")
+                    b.Property<int?>("FornecedorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("FornecedorModelId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<decimal>("PrecoCusto")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(10, 2)");
 
                     b.Property<decimal>("PrecoVenda")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(10, 2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FornecedorId");
+                    b.HasIndex("FornecedorModelId");
 
                     b.ToTable("Produtos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            Descricao = "Jaqueta de couro preta, estilo motociclista. Em ótimo estado.",
+                            Nome = "Jaqueta de Couro Vintage",
+                            PrecoCusto = 70.00m,
+                            PrecoVenda = 180.50m
+                        },
+                        new
+                        {
+                            Id = -2,
+                            AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            Descricao = "Calça jeans de cintura alta, lavagem clara. Perfeita para um look retrô.",
+                            FornecedorId = 1,
+                            Nome = "Calça Jeans Reta Anos 90",
+                            PrecoCusto = 25.00m,
+                            PrecoVenda = 79.90m
+                        },
+                        new
+                        {
+                            Id = -3,
+                            AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            FornecedorId = 1,
+                            Nome = "Vestido Floral Longo",
+                            PrecoCusto = 35.50m,
+                            PrecoVenda = 95.00m
+                        },
+                        new
+                        {
+                            Id = -4,
+                            AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
+                            Descricao = "Bolsa de ombro em couro legítimo, com detalhes em metal dourado.",
+                            FornecedorId = 2,
+                            Nome = "Bolsa de Couro Caramelo",
+                            PrecoCusto = 50.00m,
+                            PrecoVenda = 130.00m
+                        });
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
                     b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
-                        .WithOne("Estoque")
+                        .WithOne()
                         .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -222,24 +270,14 @@ namespace SiteBrecho.Migrations
 
             modelBuilder.Entity("SiteBrecho.Models.ProdutoModel", b =>
                 {
-                    b.HasOne("SiteBrecho.Models.FornecedorModel", "Fornecedor")
+                    b.HasOne("SiteBrecho.Models.FornecedorModel", null)
                         .WithMany("Produtos")
-                        .HasForeignKey("FornecedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Fornecedor");
+                        .HasForeignKey("FornecedorModelId");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.FornecedorModel", b =>
                 {
                     b.Navigation("Produtos");
-                });
-
-            modelBuilder.Entity("SiteBrecho.Models.ProdutoModel", b =>
-                {
-                    b.Navigation("Estoque")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
