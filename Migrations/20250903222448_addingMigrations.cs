@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace SiteBrecho.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class addingMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,23 +54,23 @@ namespace SiteBrecho.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: false),
-                    Descricao = table.Column<string>(type: "text", nullable: false),
-                    PrecoCusto = table.Column<decimal>(type: "numeric", nullable: false),
-                    PrecoVenda = table.Column<decimal>(type: "numeric", nullable: false),
-                    FornecedorId = table.Column<int>(type: "integer", nullable: false),
+                    Nome = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Descricao = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    PrecoCusto = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
+                    PrecoVenda = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
+                    FornecedorId = table.Column<int>(type: "integer", nullable: true),
                     CriadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    AtualizadoEm = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    FornecedorModelId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Produtos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Produtos_Fornecedores_FornecedorId",
-                        column: x => x.FornecedorId,
+                        name: "FK_Produtos_Fornecedores_FornecedorModelId",
+                        column: x => x.FornecedorModelId,
                         principalTable: "Fornecedores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -126,6 +128,17 @@ namespace SiteBrecho.Migrations
                 columns: new[] { "Id", "CriadoEm", "Email", "Nome", "SenhaHash" },
                 values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@admin.com", "Admin", "123456" });
 
+            migrationBuilder.InsertData(
+                table: "Produtos",
+                columns: new[] { "Id", "AtualizadoEm", "CriadoEm", "Descricao", "FornecedorId", "FornecedorModelId", "Nome", "PrecoCusto", "PrecoVenda" },
+                values: new object[,]
+                {
+                    { -4, new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), "Bolsa de ombro em couro legítimo, com detalhes em metal dourado.", 2, null, "Bolsa de Couro Caramelo", 50.00m, 130.00m },
+                    { -3, new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), null, 1, null, "Vestido Floral Longo", 35.50m, 95.00m },
+                    { -2, new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), "Calça jeans de cintura alta, lavagem clara. Perfeita para um look retrô.", 1, null, "Calça Jeans Reta Anos 90", 25.00m, 79.90m },
+                    { -1, new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc), "Jaqueta de couro preta, estilo motociclista. Em ótimo estado.", null, null, "Jaqueta de Couro Vintage", 70.00m, 180.50m }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Movimentacoes_AdministradorId",
                 table: "Movimentacoes",
@@ -137,9 +150,9 @@ namespace SiteBrecho.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_FornecedorId",
+                name: "IX_Produtos_FornecedorModelId",
                 table: "Produtos",
-                column: "FornecedorId");
+                column: "FornecedorModelId");
         }
 
         /// <inheritdoc />

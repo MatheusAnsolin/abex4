@@ -1,8 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using SiteBrecho.Data;
 using Microsoft.OpenApi.Models;
+using SiteBrecho.Repositories;
+using SiteBrecho.Services;
+using SiteBrecho.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -23,6 +30,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+/*
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -38,6 +46,7 @@ using (var scope = app.Services.CreateScope())
         throw;
     }
 }
+*/
 
 if (app.Environment.IsDevelopment())
 {
