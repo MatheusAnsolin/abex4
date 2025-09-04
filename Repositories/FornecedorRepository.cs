@@ -7,35 +7,35 @@ namespace SiteBrecho.Repositories
 
     public class FornecedorRepository : IFornecedorRepository
     {
-        private readonly ApplicationDbContext __context;
+        private readonly AppDbContext _context;
 
-        public FornecedorRepository(ApplicationDbContext context)
+        public FornecedorRepository(AppDbContext context)
         {
-            __context = context;
+            _context = context;
         }
 
         public async Task<IEnumerable<FornecedorModel>> GetAllAsync()
         {
-            return await __context.Fornecedores.ToListAsync();
+            return await _context.Fornecedores.ToListAsync();
         }
 
         public async Task<FornecedorModel> GetByIdAsync(int id)
         {
-            return await __context.Fornecedores.FindAsync(id);
+            return await _context.Fornecedores.FindAsync(id);
         }
 
         public async Task<FornecedorModel> CreateAsync(FornecedorModel fornecedor)
         {
-            forncedor.CriadoEm = DateTime.UtcNow;
-            __context.Fornecedores.Add(fornecedor);
-            await __context.SaveChangesAsync();
+            fornecedor.CriadoEm = DateTime.UtcNow;
+            _context.Fornecedores.Add(fornecedor);
+            await _context.SaveChangesAsync();
             return fornecedor;
         }
 
         public async Task UpdateAsync(FornecedorModel fornecedor)
         {
-            __context.Entry(fornecedor).State = EntityState.Modified;
-            await __context.SaveChangesAsync();
+            _context.Entry(fornecedor).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace SiteBrecho.Dtos
     {
         [Required(ErrorMessage = "O nome do produto é obrigatório.")]
         [MaxLength(100)]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
         [MaxLength(500)]
         public string? Descricao { get; set; }
