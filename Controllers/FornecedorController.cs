@@ -14,30 +14,23 @@ namespace SiteBrecho.Controllers
         {
             _fornecedorService = fornecedorService;
         }
- 
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var fornecedores = await _fornecedorService.ObterFornecedorAsync();
+            var fornecedores = await _fornecedorService.GetAllAsync();
             return Ok(fornecedores);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var fornecedor = await _fornecedorService.ObterIdFornecedorAsync(id);
+            var fornecedor = await _fornecedorService.GetByIdAsync(id);
             if (fornecedor == null)
+            {
                 return NotFound();
+            }
             return Ok(fornecedor);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] FornecedorModel fornecedor)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var novoFornecedor = await _fornecedorService.AdicionarFornecedorAsync(fornecedor);
-            return CreatedAtAction(nameof(GetById), new { id = novoFornecedor.Id }, novoFornecedor);
         }
 
         [HttpPut("{id}")]
@@ -51,5 +44,15 @@ namespace SiteBrecho.Controllers
             return Ok(atualizado);
         }
 
+        public async Task<IActionResult> Create([FromBody] Fornecedor fornecedor)
+        {
+            if (fornecedor == null)
+            {
+                return BadRequest();
+            }
+
+            var createdFornecedor = await _fornecedorService.CreateAsync(fornecedor);
+            return CreatedAtAction(nameof(GetById), new { id = createdFornecedor.Id }, createdFornecedor);
+        }
     }
 }
