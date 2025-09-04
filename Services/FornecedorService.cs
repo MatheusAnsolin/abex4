@@ -5,24 +5,24 @@ namespace SiteBrecho.Services
 {
     public class FornecedorService : IFornecedorService
     {
-        private readonly IFornecedorRepository _FornecedorRepository;
+        private readonly IFornecedorRepository _fornecedorRepository;
 
         public FornecedorService(IFornecedorRepository fornecedorRepository)
         {
             _fornecedorRepository = fornecedorRepository;
         }
 
-        public Task<IEnumerable<FornecedorModel>> ObterTodosAsync()
+        public Task<IEnumerable<FornecedorModel>> GetAllSupplierAsync()
         {
             return _fornecedorRepository.GetAllAsync();
         }
 
-        public Task<FornecedorModel> ObterIdFornecedorAsync(int id)
+        public Task<FornecedorModel?> GetSupplierByIdAsync(int id)
         {
             return _fornecedorRepository.GetByIdAsync(id);
         }
 
-        public Task<FornecedorModel> AdicionarFornecedorAsync(FornecedorModel fornecedor)
+        public Task<FornecedorModel> CreateSupplierAsync(FornecedorModel fornecedor)
         {
             if (string.IsNullOrWhiteSpace(fornecedor.Nome) || string.IsNullOrWhiteSpace(fornecedor.CNPJ))
             {
@@ -32,7 +32,7 @@ namespace SiteBrecho.Services
             return _fornecedorRepository.CreateeAsync(novoFornecedor);
         }
 
-        public Task AtualizarFornecedorAsync(FornecedorModel fornecedorAtualizado)
+        public Task<bool> UpdateSupplierAsync(FornecedorModel fornecedorAtualizado)
         {
             if (fornecedorAtualizado.Id <= 0)
             {
