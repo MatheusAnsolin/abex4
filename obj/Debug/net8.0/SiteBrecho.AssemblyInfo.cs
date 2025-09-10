@@ -13,7 +13,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de5734b82f90a0a33ae4a41128828817447e94c8")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47caca241eb509e240cd876dbb760444217caa25")]
+>>>>>>> 9fd6a56 (Rota de produto funcionando 100%, criação de DTOs de entrada e de saída e post e put também funcionando agora)
 [assembly: System.Reflection.AssemblyProductAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
