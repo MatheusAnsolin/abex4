@@ -35,6 +35,7 @@ namespace SiteBrecho.Controllers
             {
                 return NotFound();
             }
+            
             var fornecedorDto = _mapper.Map<FornecedorDto>(fornecedor);
             return Ok(fornecedorDto);
         }
