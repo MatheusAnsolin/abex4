@@ -1,5 +1,5 @@
+using SiteBrecho.Interfaces;
 using SiteBrecho.Models;
-using SiteBrecho.Repositories;
 
 namespace SiteBrecho.Services
 {
@@ -12,34 +12,41 @@ namespace SiteBrecho.Services
             _fornecedorRepository = fornecedorRepository;
         }
 
-        public Task<IEnumerable<FornecedorModel>> GetAllSupplierAsync()
+        public async Task<IEnumerable<FornecedorModel>> GetAllSupplierAsync()
         {
-            return _fornecedorRepository.GetAllAsync();
+            return await _fornecedorRepository.GetAllAsync();
         }
 
-        public Task<FornecedorModel?> GetSupplierByIdAsync(int id)
+        public async Task<FornecedorModel?> GetSupplierByIdAsync(int id)
         {
-            return _fornecedorRepository.GetByIdAsync(id);
+            return await _fornecedorRepository.GetByIdAsync(id);
         }
 
-        public Task<FornecedorModel> CreateSupplierAsync(FornecedorModel fornecedor)
+        public async Task<FornecedorModel> CreateSupplierAsync(FornecedorModel fornecedor)
         {
-            if (string.IsNullOrWhiteSpace(fornecedor.Nome) || string.IsNullOrWhiteSpace(fornecedor.CNPJ))
+            if (string.IsNullOrWhiteSpace(fornecedor.Nome) || string.IsNullOrWhiteSpace(fornecedor.CnpjCpf))
             {
                 throw new ArgumentException("Nome e CNPJ do fornecedor são obrigatórios.");
             }
 
-            return _fornecedorRepository.CreateeAsync(novoFornecedor);
+            return await _fornecedorRepository.CreateAsync(fornecedor);
         }
 
-        public Task<bool> UpdateSupplierAsync(FornecedorModel fornecedorAtualizado)
+        public async Task<bool> UpdateSupplierAsync(int id, FornecedorModel fornecedorAtualizado)
         {
-            if (fornecedorAtualizado.Id <= 0)
+            var fornecedorExistente = await _fornecedorRepository.GetByIdAsync(id);
+            if (fornecedorExistente == null)
             {
-                throw new ArgumentException("ID do fornecedor inválido.");
+                return false;
             }
+            
+            fornecedorExistente.Nome = fornecedorAtualizado.Nome;
+            fornecedorExistente.Email = fornecedorAtualizado.Email;
+            fornecedorExistente.Endereco = fornecedorAtualizado.Endereco;
+            fornecedorExistente.Telefone = fornecedorAtualizado.Telefone;
 
-            return _fornecedorRepository.UpdateAsync(fornecedorAtualizado);
+            await _fornecedorRepository.UpdateAsync(fornecedorExistente);
+            return true;
         }
     }
 }

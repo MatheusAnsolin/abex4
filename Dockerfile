@@ -7,9 +7,9 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore
+RUN dotnet restore "./SiteBrecho.csproj"
 
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish "./SiteBrecho.csproj" -c Release -o /app/publish 
 
 FROM base AS final
 WORKDIR /app

@@ -9,8 +9,10 @@ namespace SiteBrecho.Profiles
         public MappingProfile()
         {
             CreateMap<ProdutoModel, ProdutoDto>();
+            CreateMap<FornecedorModel, FornecedorDto>();
             
             CreateMap<CreateUpdateProdutoDto, ProdutoModel>();
+            CreateMap<CreateUpdateFornecedorDto, FornecedorModel>();
         }
     }
 }

@@ -9,6 +9,4 @@ public class FornecedorModel
     public string Telefone { get; set; }
     public string Endereco { get; set; }
     public DateTime CriadoEm { get; set; } //   = DateTime.UtcNow; dotnet ef database update dá erro se usar isso
-    
-    public ICollection<ProdutoModel> Produtos { get; set; }
 }
