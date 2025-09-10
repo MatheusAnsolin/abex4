@@ -1,4 +1,6 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using SiteBrecho.Dtos;
 using SiteBrecho.Interfaces;
 using SiteBrecho.Models;
 
@@ -9,59 +11,66 @@ namespace SiteBrecho.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
+        private readonly IMapper _mapper;
 
-        public ProdutoController(IProdutoService produtoService)
+        public ProdutoController(IProdutoService produtoService,  IMapper mapper)
         {
             _produtoService = produtoService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<ProdutoDto>>> GetAllProducts()
         {
             var produtos = await _produtoService.GetAllProductsAsync();
-            return Ok(produtos);
+            var produtosDto = _mapper.Map<IEnumerable<ProdutoDto>>(produtos);
+            return Ok(produtosDto);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProduct(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ProdutoDto>> GetProduct(int id)
         {
             var produto = await _produtoService.GetProductByIdAsync(id);
             if (produto == null)
             {
                 return NotFound();
             }
-            return Ok(produto);
+            var produtoDto = _mapper.Map<ProdutoDto>(produto);
+            return Ok(produtoDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertProduct([FromBody] ProdutoModel produto)
+        public async Task<IActionResult> InsertProduct([FromBody] CreateUpdateProdutoDto produtoDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var produto = _mapper.Map<ProdutoModel>(produtoDto);
+            
             var produtoCriado = await _produtoService.CreateProductAsync(produto);
-            return CreatedAtAction(nameof(GetProduct), new { id = produtoCriado.Id }, produtoCriado);
+
+            var produtoRetornoDto = _mapper.Map<ProdutoDto>(produtoCriado);
+            
+            return CreatedAtAction(nameof(GetProduct), new { id = produtoCriado.Id }, produtoRetornoDto);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromBody] ProdutoModel produto)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] CreateUpdateProdutoDto produtoDto)
         {
-            if (id != produto.Id)
-            {
-                return BadRequest("IDs não correspondem.");
-            }
-            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var produto = _mapper.Map<ProdutoModel>(produtoDto);
+            produto.Id = id;
             
             var sucesso = await _produtoService.UpdateProductAsync(id, produto);
             if (!sucesso)
             {
-                return NotFound();
+                return NotFound("Produto não encontrado para atualização.");
             }
 
             return NoContent();
