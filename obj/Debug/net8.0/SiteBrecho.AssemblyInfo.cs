@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+455414c8729eb5561e6d5e6cc707fb5de9d86e9e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90d56104df2480589f103321d19f6b54a53aa671")]
 [assembly: System.Reflection.AssemblyProductAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SiteBrecho")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

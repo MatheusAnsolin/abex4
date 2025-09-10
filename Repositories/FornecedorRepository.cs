@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SiteBrecho.Models;
 using SiteBrecho.Data;
+using SiteBrecho.Interfaces;
+using SiteBrecho.Models;
 
 namespace SiteBrecho.Repositories
 {
@@ -19,7 +20,7 @@ namespace SiteBrecho.Repositories
             return await _context.Fornecedores.ToListAsync();
         }
 
-        public async Task<FornecedorModel> GetByIdAsync(int id)
+        public async Task<FornecedorModel?> GetByIdAsync(int id)
         {
             return await _context.Fornecedores.FindAsync(id);
         }
