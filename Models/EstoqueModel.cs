@@ -8,5 +8,5 @@ public class EstoqueModel
     public int ProdutoId { get; set; }
     public int QuantidadeAtual { get; set; }
 
-    public ProdutoModel Produto { get; set; }
+    public ProdutoModel? Produto { get; set; }
 }

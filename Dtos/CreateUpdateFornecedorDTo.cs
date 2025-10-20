@@ -6,21 +6,21 @@ namespace SiteBrecho.Dtos
     {
         [Required(ErrorMessage = "O nome do fornecedor é obrigatório.")]
         [MaxLength(100)]
-        public string Nome { get; set; }
+        public required string Nome { get; set; }
         
         [Required(ErrorMessage = "O cnpj/cpf do fornecedor é obrigatório.")]
         [MaxLength(14)]
-        public string CnpjCpf { get; set; }
+        public required string CnpjCpf { get; set; }
         
         [Required(ErrorMessage = "O email do fornecedor é obrigatório.")]
         [MaxLength(50)]
-        public string Email { get; set; }
+        public required string Email { get; set; }
         
         [MaxLength(100)]
-        public string Telefone { get; set; }
+        public required string Telefone { get; set; }
         
         [Required(ErrorMessage = "O endereco do fornecedor é obrigatório.")]
         [MaxLength(100)]
-        public string Endereco { get; set; }
+        public required string Endereco { get; set; }
     }
 }

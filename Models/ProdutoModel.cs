@@ -10,7 +10,7 @@ public class ProdutoModel
     
     [Required]
     [MaxLength(100)]
-    public string Nome { get; set; }
+    public required string Nome { get; set; }
     
     [MaxLength(500)]
     public string? Descricao { get; set; }
