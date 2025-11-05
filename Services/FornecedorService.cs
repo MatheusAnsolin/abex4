@@ -12,9 +12,25 @@ namespace SiteBrecho.Services
             _fornecedorRepository = fornecedorRepository;
         }
 
-        public async Task<IEnumerable<FornecedorModel>> GetAllSupplierAsync()
+        public async Task<IEnumerable<FornecedorModel>> GetAllSupplierAsync(bool includeInactive = false)
         {
-            return await _fornecedorRepository.GetAllAsync();
+            return await _fornecedorRepository.GetAllAsync(includeInactive);
+        }
+
+        public async Task<SiteBrecho.Dtos.PagedResult<FornecedorModel>> GetAllSupplierPagedAsync(SiteBrecho.Dtos.PaginationParameters parameters, bool includeInactive = false)
+        {
+            var (items, totalCount) = await _fornecedorRepository.GetAllPagedAsync(parameters, includeInactive);
+
+            var totalPages = (int)Math.Ceiling(totalCount / (double)parameters.PageSize);
+
+            return new SiteBrecho.Dtos.PagedResult<FornecedorModel>
+            {
+                Data = items,
+                PageNumber = parameters.PageNumber,
+                PageSize = parameters.PageSize,
+                TotalRecords = totalCount,
+                TotalPages = totalPages
+            };
         }
 
         public async Task<FornecedorModel?> GetSupplierByIdAsync(int id)
@@ -39,13 +55,53 @@ namespace SiteBrecho.Services
             {
                 return false;
             }
-            
+
             fornecedorExistente.Nome = fornecedorAtualizado.Nome;
             fornecedorExistente.Email = fornecedorAtualizado.Email;
             fornecedorExistente.Endereco = fornecedorAtualizado.Endereco;
             fornecedorExistente.Telefone = fornecedorAtualizado.Telefone;
 
             await _fornecedorRepository.UpdateAsync(fornecedorExistente);
+            return true;
+        }
+
+        public async Task<bool> DeleteSupplierAsync(int id)
+        {
+            var fornecedor = await _fornecedorRepository.GetByIdAsync(id);
+            if (fornecedor == null)
+            {
+                return false;
+            }
+
+            // Soft delete: marca como excluído
+            fornecedor.Excluido = true;
+            await _fornecedorRepository.UpdateAsync(fornecedor);
+            return true;
+        }
+
+        public async Task<bool> ActivateSupplierAsync(int id)
+        {
+            var fornecedor = await _fornecedorRepository.GetByIdAsync(id);
+            if (fornecedor == null || fornecedor.Excluido)
+            {
+                return false;
+            }
+
+            fornecedor.Ativo = true;
+            await _fornecedorRepository.UpdateAsync(fornecedor);
+            return true;
+        }
+
+        public async Task<bool> DeactivateSupplierAsync(int id)
+        {
+            var fornecedor = await _fornecedorRepository.GetByIdAsync(id);
+            if (fornecedor == null || fornecedor.Excluido)
+            {
+                return false;
+            }
+
+            fornecedor.Ativo = false;
+            await _fornecedorRepository.UpdateAsync(fornecedor);
             return true;
         }
     }

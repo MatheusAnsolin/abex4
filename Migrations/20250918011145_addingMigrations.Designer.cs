@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SiteBrecho.Data;
@@ -11,9 +12,11 @@ using SiteBrecho.Data;
 namespace SiteBrecho.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250918011145_addingMigrations")]
+    partial class addingMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,13 +65,13 @@ namespace SiteBrecho.Migrations
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
-                    b.Property<int>("ProdutoSkuId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("QuantidadeAtual")
                         .HasColumnType("integer");
 
-                    b.HasKey("ProdutoSkuId");
+                    b.HasKey("ProdutoId");
 
                     b.ToTable("Estoques");
                 });
@@ -80,9 +83,6 @@ namespace SiteBrecho.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("CnpjCpf")
                         .IsRequired()
@@ -98,9 +98,6 @@ namespace SiteBrecho.Migrations
                     b.Property<string>("Endereco")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -136,7 +133,7 @@ namespace SiteBrecho.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ProdutoSkuId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantidade")
@@ -153,7 +150,7 @@ namespace SiteBrecho.Migrations
 
                     b.HasIndex("AdministradorId");
 
-                    b.HasIndex("ProdutoSkuId");
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Movimentacoes");
                 });
@@ -166,9 +163,6 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime>("AtualizadoEm")
                         .HasColumnType("timestamp with time zone");
 
@@ -178,9 +172,6 @@ namespace SiteBrecho.Migrations
                     b.Property<string>("Descricao")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("FornecedorId")
                         .HasColumnType("integer");
@@ -204,11 +195,9 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -1,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Jaqueta de couro preta, estilo motociclista. Em ótimo estado.",
-                            Excluido = false,
                             Nome = "Jaqueta de Couro Vintage",
                             PrecoCusto = 70.00m,
                             PrecoVenda = 180.50m
@@ -216,11 +205,9 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -2,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Calça jeans de cintura alta, lavagem clara. Perfeita para um look retrô.",
-                            Excluido = false,
                             FornecedorId = 1,
                             Nome = "Calça Jeans Reta Anos 90",
                             PrecoCusto = 25.00m,
@@ -229,10 +216,8 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -3,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
-                            Excluido = false,
                             FornecedorId = 1,
                             Nome = "Vestido Floral Longo",
                             PrecoCusto = 35.50m,
@@ -241,11 +226,9 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -4,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Bolsa de ombro em couro legítimo, com detalhes em metal dourado.",
-                            Excluido = false,
                             FornecedorId = 2,
                             Nome = "Bolsa de Couro Caramelo",
                             PrecoCusto = 50.00m,
@@ -261,9 +244,6 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime>("AtualizadoEm")
                         .HasColumnType("timestamp with time zone");
 
@@ -273,9 +253,6 @@ namespace SiteBrecho.Migrations
                     b.Property<string>("Descricao")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
 
                     b.Property<decimal>("PrecoVenda")
                         .HasColumnType("decimal(10, 2)");
@@ -308,9 +285,6 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime>("AtualizadoEm")
                         .HasColumnType("timestamp with time zone");
 
@@ -321,28 +295,20 @@ namespace SiteBrecho.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("ProdutoVariations");
+                    b.ToTable("ProdutoVariationModel");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
-                    b.HasOne("SiteBrecho.Models.ProdutoSkuModel", "ProdutoSku")
+                    b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithOne()
-                        .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoSkuId")
+                        .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProdutoSku");
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.MovimentacaoModel", b =>
@@ -353,15 +319,15 @@ namespace SiteBrecho.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiteBrecho.Models.ProdutoSkuModel", "ProdutoSku")
+                    b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoSkuId")
+                        .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Administrador");
 
-                    b.Navigation("ProdutoSku");
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.ProdutoSkuModel", b =>

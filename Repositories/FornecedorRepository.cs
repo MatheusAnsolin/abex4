@@ -15,9 +15,43 @@ namespace SiteBrecho.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<FornecedorModel>> GetAllAsync()
+        public async Task<IEnumerable<FornecedorModel>> GetAllAsync(bool includeInactive = false)
         {
-            return await _context.Fornecedores.ToListAsync();
+            var query = _context.Fornecedores.AsQueryable();
+
+            // Sempre remove os excluídos
+            query = query.Where(f => !f.Excluido);
+
+            // Remove inativos se não for includeInactive
+            if (!includeInactive)
+            {
+                query = query.Where(f => f.Ativo);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<(IEnumerable<FornecedorModel> Items, int TotalCount)> GetAllPagedAsync(SiteBrecho.Dtos.PaginationParameters parameters, bool includeInactive = false)
+        {
+            var query = _context.Fornecedores.AsQueryable();
+
+            // Sempre remove os excluídos
+            query = query.Where(f => !f.Excluido);
+
+            // Remove inativos se não for includeInactive
+            if (!includeInactive)
+            {
+                query = query.Where(f => f.Ativo);
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
         }
 
         public async Task<FornecedorModel?> GetByIdAsync(int id)
@@ -37,6 +71,16 @@ namespace SiteBrecho.Repositories
         {
             _context.Entry(fornecedor).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var fornecedor = await _context.Fornecedores.FindAsync(id);
+            if (fornecedor != null)
+            {
+                _context.Fornecedores.Remove(fornecedor);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

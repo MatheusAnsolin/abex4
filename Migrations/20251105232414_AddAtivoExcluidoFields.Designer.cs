@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SiteBrecho.Data;
@@ -11,9 +12,11 @@ using SiteBrecho.Data;
 namespace SiteBrecho.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251105232414_AddAtivoExcluidoFields")]
+    partial class AddAtivoExcluidoFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,13 +65,13 @@ namespace SiteBrecho.Migrations
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
-                    b.Property<int>("ProdutoSkuId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("QuantidadeAtual")
                         .HasColumnType("integer");
 
-                    b.HasKey("ProdutoSkuId");
+                    b.HasKey("ProdutoId");
 
                     b.ToTable("Estoques");
                 });
@@ -136,7 +139,7 @@ namespace SiteBrecho.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ProdutoSkuId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantidade")
@@ -153,7 +156,7 @@ namespace SiteBrecho.Migrations
 
                     b.HasIndex("AdministradorId");
 
-                    b.HasIndex("ProdutoSkuId");
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Movimentacoes");
                 });
@@ -308,9 +311,6 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime>("AtualizadoEm")
                         .HasColumnType("timestamp with time zone");
 
@@ -321,28 +321,20 @@ namespace SiteBrecho.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("ProdutoVariations");
+                    b.ToTable("ProdutoVariationModel");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
-                    b.HasOne("SiteBrecho.Models.ProdutoSkuModel", "ProdutoSku")
+                    b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithOne()
-                        .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoSkuId")
+                        .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProdutoSku");
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.MovimentacaoModel", b =>
@@ -353,15 +345,15 @@ namespace SiteBrecho.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiteBrecho.Models.ProdutoSkuModel", "ProdutoSku")
+                    b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoSkuId")
+                        .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Administrador");
 
-                    b.Navigation("ProdutoSku");
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.ProdutoSkuModel", b =>
