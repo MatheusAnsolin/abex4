@@ -9,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<IProdutoSkuRepository, ProdutoSkuRepository>();
+builder.Services.AddScoped<IProdutoSkuService, ProdutoSkuService>();
+builder.Services.AddScoped<IProdutoVariationRepository, ProdutoVariationRepository>();
+builder.Services.AddScoped<IProdutoVariationService, ProdutoVariationService>();
 builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 builder.Services.AddScoped<IFornecedorService, FornecedorService>();
 builder.Services.AddScoped<IVendaRepository, VendaRepository>();
