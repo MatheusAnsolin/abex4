@@ -5,7 +5,7 @@ namespace SiteBrecho.Dtos
 	public class CreateUpdateEstoqueDto
 	{
 		[Required]
-		public int ProdutoId { get; set; }
+		public int ProdutoSkuId { get; set; }
 
 		[Required]
 		[Range(0, int.MaxValue, ErrorMessage = "A quantidade deve ser zero ou positiva.")]

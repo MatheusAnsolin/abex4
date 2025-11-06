@@ -11,14 +11,18 @@ namespace SiteBrecho.Models
         public int? VendaId { get; set; }
         public VendaModel? Venda { get; set; }
 
-        public int ProdutoId { get; set; }
+        public int ProdutoSkuId { get; set; }
 
-        [Required]
-        public required ProdutoModel Produto { get; set; }
+        public ProdutoSkuModel? ProdutoSku { get; set; }
 
         public int Quantidade { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal PrecoUnitario { get; set; }
+
+        public bool Ativo { get; set; } = true;
+        public bool Excluido { get; set; } = false;
+        public DateTime CriadoEm { get; set; } = DateTime.UtcNow;
+        public DateTime AtualizadoEm { get; set; } = DateTime.UtcNow;
     }
 }

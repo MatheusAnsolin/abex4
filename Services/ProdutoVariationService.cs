@@ -69,7 +69,6 @@ namespace SiteBrecho.Services
                 return false;
             }
 
-            // Soft delete: marca como excluído
             variation.Excluido = true;
             await _variationRepository.UpdateAsync(variation);
             return true;
