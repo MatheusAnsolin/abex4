@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
     public DbSet<AdministradorModel> Administradores { get; set; }
     public DbSet<MovimentacaoModel> Movimentacoes { get; set; }
     public DbSet<EstoqueModel> Estoques { get; set; }
+    public DbSet<VendaModel> Vendas { get; set; }
+    public DbSet<VendaItemModel> VendaItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

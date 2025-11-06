@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SiteBrecho.Data;
@@ -11,9 +12,11 @@ using SiteBrecho.Data;
 namespace SiteBrecho.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250923230101_RotaVendas")]
+    partial class RotaVendas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,13 +65,13 @@ namespace SiteBrecho.Migrations
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
-                    b.Property<int>("ProdutoSkuId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("QuantidadeAtual")
                         .HasColumnType("integer");
 
-                    b.HasKey("ProdutoSkuId");
+                    b.HasKey("ProdutoId");
 
                     b.ToTable("Estoques");
                 });
@@ -80,9 +83,6 @@ namespace SiteBrecho.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("CnpjCpf")
                         .IsRequired()
@@ -98,9 +98,6 @@ namespace SiteBrecho.Migrations
                     b.Property<string>("Endereco")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -135,7 +132,7 @@ namespace SiteBrecho.Migrations
                     b.Property<string>("Observacao")
                         .HasColumnType("text");
 
-                    b.Property<int>("ProdutoSkuId")
+                    b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Quantidade")
@@ -152,7 +149,7 @@ namespace SiteBrecho.Migrations
 
                     b.HasIndex("AdministradorId");
 
-                    b.HasIndex("ProdutoSkuId");
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Movimentacoes");
                 });
@@ -165,9 +162,6 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime>("AtualizadoEm")
                         .HasColumnType("timestamp with time zone");
 
@@ -177,9 +171,6 @@ namespace SiteBrecho.Migrations
                     b.Property<string>("Descricao")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("FornecedorId")
                         .HasColumnType("integer");
@@ -203,11 +194,9 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -1,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Jaqueta de couro preta, estilo motociclista. Em ótimo estado.",
-                            Excluido = false,
                             Nome = "Jaqueta de Couro Vintage",
                             PrecoCusto = 70.00m,
                             PrecoVenda = 180.50m
@@ -215,11 +204,9 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -2,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Calça jeans de cintura alta, lavagem clara. Perfeita para um look retrô.",
-                            Excluido = false,
                             FornecedorId = 1,
                             Nome = "Calça Jeans Reta Anos 90",
                             PrecoCusto = 25.00m,
@@ -228,10 +215,8 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -3,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
-                            Excluido = false,
                             FornecedorId = 1,
                             Nome = "Vestido Floral Longo",
                             PrecoCusto = 35.50m,
@@ -240,11 +225,9 @@ namespace SiteBrecho.Migrations
                         new
                         {
                             Id = -4,
-                            Ativo = true,
                             AtualizadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             CriadoEm = new DateTime(2025, 9, 2, 20, 0, 0, 0, DateTimeKind.Utc),
                             Descricao = "Bolsa de ombro em couro legítimo, com detalhes em metal dourado.",
-                            Excluido = false,
                             FornecedorId = 2,
                             Nome = "Bolsa de Couro Caramelo",
                             PrecoCusto = 50.00m,
@@ -252,7 +235,7 @@ namespace SiteBrecho.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SiteBrecho.Models.ProdutoSkuModel", b =>
+            modelBuilder.Entity("SiteBrecho.Models.VendaItemModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,46 +243,28 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("AtualizadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Descricao")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("PrecoVenda")
-                        .HasColumnType("decimal(10, 2)");
+                    b.Property<decimal>("PrecoUnitario")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProdutoVariationId1")
+                    b.Property<int>("Quantidade")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProdutoVariationId2")
+                    b.Property<int?>("VendaId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProdutoId");
 
-                    b.HasIndex("ProdutoVariationId1");
+                    b.HasIndex("VendaId");
 
-                    b.HasIndex("ProdutoVariationId2");
-
-                    b.ToTable("ProdutoSkus");
+                    b.ToTable("VendaItems");
                 });
 
-            modelBuilder.Entity("SiteBrecho.Models.ProdutoVariationModel", b =>
+            modelBuilder.Entity("SiteBrecho.Models.VendaModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -307,41 +272,30 @@ namespace SiteBrecho.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("AtualizadoEm")
+                    b.Property<DateTime>("DataVenda")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Descricao")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("Excluido")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nome")
+                    b.Property<string>("NomeCliente")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProdutoVariations");
+                    b.ToTable("Vendas");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.EstoqueModel", b =>
                 {
-                    b.HasOne("SiteBrecho.Models.ProdutoSkuModel", "ProdutoSku")
+                    b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithOne()
-                        .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoSkuId")
+                        .HasForeignKey("SiteBrecho.Models.EstoqueModel", "ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProdutoSku");
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("SiteBrecho.Models.MovimentacaoModel", b =>
@@ -352,18 +306,18 @@ namespace SiteBrecho.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiteBrecho.Models.ProdutoSkuModel", "ProdutoSku")
+                    b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoSkuId")
+                        .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Administrador");
 
-                    b.Navigation("ProdutoSku");
+                    b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("SiteBrecho.Models.ProdutoSkuModel", b =>
+            modelBuilder.Entity("SiteBrecho.Models.VendaItemModel", b =>
                 {
                     b.HasOne("SiteBrecho.Models.ProdutoModel", "Produto")
                         .WithMany()
@@ -371,21 +325,18 @@ namespace SiteBrecho.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SiteBrecho.Models.ProdutoVariationModel", "Variacao1")
-                        .WithMany()
-                        .HasForeignKey("ProdutoVariationId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SiteBrecho.Models.ProdutoVariationModel", "Variacao2")
-                        .WithMany()
-                        .HasForeignKey("ProdutoVariationId2");
+                    b.HasOne("SiteBrecho.Models.VendaModel", "Venda")
+                        .WithMany("Itens")
+                        .HasForeignKey("VendaId");
 
                     b.Navigation("Produto");
 
-                    b.Navigation("Variacao1");
+                    b.Navigation("Venda");
+                });
 
-                    b.Navigation("Variacao2");
+            modelBuilder.Entity("SiteBrecho.Models.VendaModel", b =>
+                {
+                    b.Navigation("Itens");
                 });
 #pragma warning restore 612, 618
         }
