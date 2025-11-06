@@ -19,10 +19,8 @@ namespace SiteBrecho.Repositories
         {
             var query = _context.Fornecedores.AsQueryable();
 
-            // Sempre remove os excluídos
             query = query.Where(f => !f.Excluido);
 
-            // Remove inativos se não for includeInactive
             if (!includeInactive)
             {
                 query = query.Where(f => f.Ativo);
@@ -35,10 +33,8 @@ namespace SiteBrecho.Repositories
         {
             var query = _context.Fornecedores.AsQueryable();
 
-            // Sempre remove os excluídos
             query = query.Where(f => !f.Excluido);
 
-            // Remove inativos se não for includeInactive
             if (!includeInactive)
             {
                 query = query.Where(f => f.Ativo);

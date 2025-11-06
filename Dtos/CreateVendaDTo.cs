@@ -15,8 +15,8 @@ namespace SiteBrecho.Dtos
     public class VendaItemDto
     {
         [Required]
-        public int ProdutoId { get; set; }
-        
+        public int ProdutoSkuId { get; set; }
+
         [Required]
         [Range(1, int.MaxValue)]
         public int Quantidade { get; set; }

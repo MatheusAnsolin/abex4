@@ -73,7 +73,6 @@ namespace SiteBrecho.Services
                 return false;
             }
 
-            // Soft delete: marca como excluído
             fornecedor.Excluido = true;
             await _fornecedorRepository.UpdateAsync(fornecedor);
             return true;

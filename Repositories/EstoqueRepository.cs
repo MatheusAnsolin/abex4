@@ -14,9 +14,39 @@ namespace SiteBrecho.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<EstoqueModel>> GetAllAsync()
+        public async Task<IEnumerable<EstoqueModel>> GetAllAsync(bool includeInactive = false)
         {
-            return await _context.Estoques.ToListAsync();
+            var query = _context.Estoques.AsQueryable();
+
+            query = query.Where(e => !e.Excluido);
+
+            if (!includeInactive)
+            {
+                query = query.Where(e => e.Ativo);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<(IEnumerable<EstoqueModel> Items, int TotalCount)> GetAllPagedAsync(SiteBrecho.Dtos.PaginationParameters parameters, bool includeInactive = false)
+        {
+            var query = _context.Estoques.AsQueryable();
+
+            query = query.Where(e => !e.Excluido);
+
+            if (!includeInactive)
+            {
+                query = query.Where(e => e.Ativo);
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
         }
 
         public async Task<EstoqueModel?> GetByIdAsync(int id)
@@ -24,9 +54,9 @@ namespace SiteBrecho.Repositories
             return await _context.Estoques.FindAsync(id);
         }
 
-        public async Task<EstoqueModel?> GetByProdutoIdAsync(int produtoId)
+        public async Task<EstoqueModel?> GetByProdutoSkuIdAsync(int produtoSkuId)
         {
-            return await _context.Estoques.FirstOrDefaultAsync(e => e.ProdutoId == produtoId);
+            return await _context.Estoques.FirstOrDefaultAsync(e => e.ProdutoSkuId == produtoSkuId);
         }
 
         public async Task<EstoqueModel> CreateAsync(EstoqueModel estoque)
