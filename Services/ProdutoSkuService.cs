@@ -72,7 +72,6 @@ namespace SiteBrecho.Services
                 return false;
             }
 
-            // Soft delete: marca como excluído
             produtoSku.Excluido = true;
             await _produtoSkuRepository.UpdateAsync(produtoSku);
             return true;

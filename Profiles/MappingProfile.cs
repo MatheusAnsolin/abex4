@@ -12,6 +12,8 @@ namespace SiteBrecho.Profiles
             CreateMap<ProdutoSkuModel, ProdutoSKUDto>();
             CreateMap<FornecedorModel, FornecedorDto>();
             CreateMap<ProdutoVariationModel, ProdutoVariationDto>();
+            CreateMap<VendaModel, VendaDto>();
+            CreateMap<VendaItemModel, VendaItemResponseDto>();
 
             CreateMap<CreateUpdateProdutoDto, ProdutoModel>();
             CreateMap<CreateUpdateProductSkuDto, ProdutoSkuModel>();

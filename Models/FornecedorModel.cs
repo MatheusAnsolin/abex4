@@ -10,5 +10,6 @@ public class FornecedorModel
     public string Endereco { get; set; }
     public bool Ativo { get; set; } = true;
     public bool Excluido { get; set; } = false;
-    public DateTime CriadoEm { get; set; } //   = DateTime.UtcNow; dotnet ef database update dá erro se usar isso
+    public DateTime CriadoEm { get; set; }
+    public DateTime AtualizadoEm { get; set; }
 }
