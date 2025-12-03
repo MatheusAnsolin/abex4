@@ -44,7 +44,7 @@ namespace SiteBrecho.Services
             return await _estoqueRepository.GetByProdutoSkuIdAsync(produtoSkuId);
         }
 
-        public async Task<EstoqueModel> CreateStockAsync(CreateUpdateEstoqueDto dto)
+        public async Task<EstoqueModel> CreateStockAsync(CreateEstoqueDto dto)
         {
             var estoque = new EstoqueModel
             {
@@ -56,12 +56,22 @@ namespace SiteBrecho.Services
             return await _estoqueRepository.CreateAsync(estoque);
         }
 
-        public async Task<bool> UpdateStockAsync(int id, CreateUpdateEstoqueDto dto)
+        public async Task<bool> UpdateStockAsync(int id, UpdateEstoqueDto dto)
         {
             var existing = await _estoqueRepository.GetByIdAsync(id);
             if (existing == null) return false;
 
-            existing.ProdutoSkuId = dto.ProdutoSkuId;
+            existing.QuantidadeAtual = dto.QuantidadeAtual;
+            existing.AtualizadoEm = DateTime.UtcNow;
+            await _estoqueRepository.UpdateAsync(existing);
+            return true;
+        }
+
+        public async Task<bool> UpdateStockBySkuIdAsync(int produtoSkuId, UpdateEstoqueDto dto)
+        {
+            var existing = await _estoqueRepository.GetByProdutoSkuIdAsync(produtoSkuId);
+            if (existing == null) return false;
+
             existing.QuantidadeAtual = dto.QuantidadeAtual;
             existing.AtualizadoEm = DateTime.UtcNow;
             await _estoqueRepository.UpdateAsync(existing);

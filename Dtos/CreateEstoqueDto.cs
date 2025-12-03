@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SiteBrecho.Dtos
 {
-	public class CreateUpdateEstoqueDto
+	public class CreateEstoqueDto
 	{
 		[Required]
 		public int ProdutoSkuId { get; set; }

@@ -52,7 +52,7 @@ namespace SiteBrecho.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUpdateEstoqueDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateEstoqueDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace SiteBrecho.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] CreateUpdateEstoqueDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateEstoqueDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -72,6 +72,19 @@ namespace SiteBrecho.Controllers
             }
 
             var updated = await _estoqueService.UpdateStockAsync(id, dto);
+            if (!updated) return NotFound("Estoque não encontrado para atualização.");
+            return NoContent();
+        }
+
+        [HttpPut("by-sku/{produtoSkuId:int}")]
+        public async Task<IActionResult> UpdateBySkuId(int produtoSkuId, [FromBody] UpdateEstoqueDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updated = await _estoqueService.UpdateStockBySkuIdAsync(produtoSkuId, dto);
             if (!updated) return NotFound("Estoque não encontrado para atualização.");
             return NoContent();
         }
